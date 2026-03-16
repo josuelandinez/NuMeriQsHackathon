@@ -1,0 +1,11 @@
+# Build directories
+build_*/
+
+# Profiling reports
+profile-report*/
+
+# Test text files
+test*.txt
+
+# Editor backup files
+*~
