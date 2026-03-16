@@ -67,19 +67,3 @@ srun --ntasks=${SLURM_NTASKS} \
      -trace-mpi \
      -- \
      ${PROGRAM}
-
-#vtune -collect ${analysis} \
-#      -result-dir ${PROFILE_DIR} \
-#      -follow-child \
-#      -- \
-#      srun --ntasks=${SLURM_NTASKS} \                                                                                                                                                                                          #       --cpus-per-task=${SLURM_CPUS_PER_TASK} \
-#      --cpu-bind=cores \
-#      ${PROGRAM}
-
-#vtune -collect ${analysis} \
-#      -result-dir ${PROFILE_DIR} \
-#      -target-processes all  \
-#      -- \
-#      srun --ntasks=${SLURM_NTASKS} \                                                                                                                                                                                          #       --cpus-per-task=${SLURM_CPUS_PER_TASK} \
-#      --cpu-bind=cores \
-#      ${PROGRAM}
