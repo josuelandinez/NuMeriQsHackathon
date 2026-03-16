@@ -6,7 +6,7 @@
 BUILD ?= release
 
 # Source files
-SRC = pi_cal.f90
+SRC = halo_exchange.f90
 
 ifeq ($(BUILD), profile)
     # --- Profile Configuration ---
@@ -14,14 +14,14 @@ ifeq ($(BUILD), profile)
     # -g for symbols, -O3 for aggresive optimization, -O2 mild optimization, -O0 no optimization	
     FFLAGS = -g -O2 -march=native  -fno-omit-frame-pointer
     OUT_DIR = build_scorep
-    TARGET = $(OUT_DIR)/pi_cal
+    TARGET = $(OUT_DIR)/halo_exchange
 else
     # --- Regular Configuration ---
     FC = mpif90
     # -march=native (machine specific), -O3 for aggresive optimization, -O2 mild optimization, -O0 no optimization	
-    FFLAGS = -O2 -march=native 
+    FFLAGS = -O3 -march=native 
     OUT_DIR = build_profile
-    TARGET = $(OUT_DIR)/pi_cal
+    TARGET = $(OUT_DIR)/halo_exchange
 endif
 
 all: $(OUT_DIR) $(TARGET)

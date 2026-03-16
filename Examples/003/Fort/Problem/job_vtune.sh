@@ -54,7 +54,7 @@ export analysis="hotspots"
 
 #choose test to run: build and/or applicaton path
 export BUILD_DIR="./build_profile"
-export PROGRAM="${BUILD_DIR}/halo_exchange"
+export PROGRAM="${BUILD_DIR}/pi_cal"
 
 # directory where VTune results will be stored
 export PROFILE_DIR="profile-report-vtune-${analysis}-${SLURM_JOB_ID}"

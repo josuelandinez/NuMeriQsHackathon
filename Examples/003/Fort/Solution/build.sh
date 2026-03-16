@@ -20,7 +20,7 @@ rm -rf build_profile
 make BUILD=profile OUT_DIR=build_profile
 
 
-ldd build_profile/halo_exchange
+ldd build_profile/pi_cal
 
 #Score-p build
 
@@ -37,4 +37,4 @@ rm -rf build_scorep
 #build regular
 make FC=${SCOREP_MPIFC} BUILD=profile OUT_DIR=build_scorep
 
-ldd build_scorep/halo_exchange
+ldd build_scorep/pi_cal

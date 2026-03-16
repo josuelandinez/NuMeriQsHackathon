@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(Mandelbrot_Profiling)
+project(Halo_Profiling)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -14,5 +14,5 @@ set(CMAKE_CXX_FLAGS_DEBUG "-O2  -march=native -g -fno-omit-frame-pointer")
 find_package(MPI REQUIRED)
 
 # Replace this with whichever file you are compiling
-add_executable(pi_cal pi_cal.cpp)
-target_link_libraries(pi_cal PRIVATE MPI::MPI_CXX)
+add_executable(halo_exchange halo_exchange.cpp)
+target_link_libraries(halo_exchange PRIVATE MPI::MPI_CXX)

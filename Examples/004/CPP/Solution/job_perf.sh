@@ -1,7 +1,7 @@
 #!/bin/bash -x
 #SBATCH --job-name="profile-perf-test"
 #SBATCH --nodes=1
-#SBATCH --ntasks=1
+#SBATCH --ntasks=64
 #SBATCH --cpus-per-task=1
 #SBATCH --time=02:00:00
 #SBATCH --output=test-perf-out-JobID-%j.txt
@@ -36,7 +36,7 @@ export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK}
 export BUILD_DIR="./build_profile"
 
 #binary or applcation path
-export PROGRAM="${BUILD_DIR}/pi_cal"
+export PROGRAM="${BUILD_DIR}/halo_exchange"
 
 #perf directory
 export PERF_DIR="profile-report-perf-JobID-${SLURM_JOB_ID}";
@@ -52,6 +52,15 @@ echo "Generating reports..."
 
 # Set our target file to Rank 0's output
 export PERF_DATA_FILE="${PERF_DIR}/perf_rank_0.data"
+
+# FLAT HOTSPOTS: Like VTune's main table. Strips out the call tree and just lists the heaviest functions.
+perf report -i ${PERF_DATA_FILE} --stdio --no-children -g none --sort comm,dso,symbol > ${PERF_DIR}/report_hotspots_flat.txt
+
+#HOTSPOTS" Annotated to source code lines
+perf report -i ${PERF_DATA_FILE} --stdio --no-children --sort comm,dso,symbol,srcline > ${PERF_DIR}/report_hotspots_srcline.txt
+
+# Set our target file to Rank 33's output
+export PERF_DATA_FILE="${PERF_DIR}/perf_rank_33.data"
 
 # FLAT HOTSPOTS: Like VTune's main table. Strips out the call tree and just lists the heaviest functions.
 perf report -i ${PERF_DATA_FILE} --stdio --no-children -g none --sort comm,dso,symbol > ${PERF_DIR}/report_hotspots_flat.txt

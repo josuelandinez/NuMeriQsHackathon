@@ -17,6 +17,7 @@ rm -rf build_regular
 CXX=mpicxx cmake -B build_regular -DCMAKE_BUILD_TYPE=Release
 # Compile the regular version
 cmake --build build_regular
+ldd build_regular/pi_cal
 
 rm -rf build_profile
 # Generate the build system in a folder called 'build_regular'
@@ -25,7 +26,7 @@ CXX=mpicxx cmake -B build_profile -DCMAKE_BUILD_TYPE=Debug
 # Compile the profile version
 cmake --build build_profile
 
-ldd build_profile/halo_exchange
+ldd build_profile/pi_cal
 
 #Score-p build
 
@@ -50,4 +51,4 @@ SCOREP_WRAPPER=off cmake -B build_scorep -DCMAKE_BUILD_TYPE=Debug \
 # Compile it
 cmake --build build_scorep
 
-ldd build_scorep/halo_exchange
+ldd build_scorep/pi_cal

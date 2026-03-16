@@ -1,8 +1,8 @@
 #!/bin/bash -x
 #SBATCH --job-name="profile-test"
 #SBATCH --nodes=1
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
+#SBATCH --ntasks=64
+#SBATCH --cpus-per-task=1
 #SBATCH --time=02:00:00
 #SBATCH --output=test-scorep-out-JobID-%j.txt
 #SBATCH --error=test-scorep-err-JobID-%j.txt
@@ -30,6 +30,9 @@ export OMPI_MCA_pml=ucx # use ucx anyway
 export UCX_MEMTYPE_CACHE=n         # Don't cache GPU memory
 export UCX_WARN_UNUSED_ENV_VARS=n  # Silence warnings unused vars 
 
+# Force eager protocol limit 4 bytes
+#export OMPI_MCA_pml_ob1_eager_limit=4
+
 
 # set omp number of tasks
 export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK}
@@ -41,7 +44,7 @@ export SCOREP_EXPERIMENT_DIRECTORY="profile-report-scorep-JobID-${SLURM_JOB_ID}"
 export SCOREP_TOTAL_MEMORY=1G; # set memory for colelction
 export SCOREP_TIMER=clock_gettime; # set timer or clock
 # Tell Score-P to look at the Call Stack (unwind it) just like perf does
-export SCOREP_ENABLE_UNWINDING=true
+#export SCOREP_ENABLE_UNWINDING=true
 # Tell Score-P to pause the program every number (10000) of CPU cycles and look at the call stack to see libc functions!
 export SCOREP_SAMPLING_EVENTS=perf_cycles@10000
 
@@ -49,13 +52,15 @@ export SCOREP_SAMPLING_EVENTS=perf_cycles@10000
 #export SCOREP_METRIC_PERF=L1-dcache-load-misses
 
 #choose what test to run
-#export BUILD_DIR="./build_regular"
-export BUILD_DIR="./build_scorep"
-export PROGRAM="${BUILD_DIR}/pi_cal"
+export BUILD_DIR="./build_regular"
+#export BUILD_DIR="./build_scorep"
+export PROGRAM="${BUILD_DIR}/halo_exchange"
 
 
 srun --ntasks=${SLURM_NTASKS} \
      --cpus-per-task=${SLURM_CPUS_PER_TASK} \
+     --distribution=block:block \
+     --hint=nomultithread \
      --cpu-bind=cores \
       ${PROGRAM}
 
