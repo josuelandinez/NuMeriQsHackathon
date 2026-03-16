@@ -1,6 +1,6 @@
 # HPC Profiling Hackathon 2026
 
-This repository contains C++ and Fortran examples designed for performance analysis and bottleneck identification using professional HPC profiling tools.
+This repository contains C++ and Fortran examples designed for performance analysis and bottleneck identification using HPC profiling tools.
 
 ## Environment Setup
 
